@@ -13,3 +13,13 @@ A beginner-friendly, step-by-step walkthrough for building **Linux From Scratch 
 6. [Cross-Compiling Temporary Tools](#6-cross-compiling-temporary-tools)
 7. [Entering Chroot & Building Tools](#7-entering-chroot--building-tools)
 8. [Installing Basic System Software](#8-installing-basic-system-software)
+
+## STEP 1 System Setup
+:Set up the environment where we will use to build LFS. 
+
+### My VM Spec
+- VMware Workstation 17
+- Ubuntu 24.04.3
+- RAM: 8 GB
+- Processor: 1 CPU
+- 80 GB of storage
