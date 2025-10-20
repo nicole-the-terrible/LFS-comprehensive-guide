@@ -23,3 +23,65 @@ A beginner-friendly, step-by-step walkthrough for building **Linux From Scratch 
 - RAM: 8 GB
 - Processor: 1 CPU
 - 80 GB of storage
+
+## STEP 2 Preparing your base OS for building LFS
+
+### basic requirement 
+- [install required packages](https://www.linuxfromscratch.org/lfs/view/10.1-rc1/chapter02/hostreqs.html)
+```shell
+sudo apt install bison gawk m4 texinfo 
+sudo ln -sf bash /usr/bin/sh
+```
+- You could also run a version check after installing all the packages using this [version-check.sh](https://www.linuxfromscratch.org/lfs/view/10.1-rc1/chapter02/hostreqs.html)
+
+### Create new partition
+
+We will be using the fdisk to do this. is you're not familiar with the program I recommend this [comprehensive guide](https://www.howtogeek.com/106873/how-to-use-fdisk-to-manage-partitions-on-linux/). We will start by listing the partitions we have and then start creating a new partition for building LFS.
+
+- use -l to list the partition
+```shell
+sudo fdisk -l /dev/sda
+```
+- Create a GPT partition
+```shell
+fdisk /dev/sda
+```
+- after entering fdisk, use these commands to create a GPT partition
+
+    - g : insert func
+    - n : insert func
+    - p : insert func
+    - w : insert func
+
+- Create a file system on the partition we just created 
+
+    - format the partition to ext4 using ```mkfs```
+    ```shell
+    sudo mkfs -v -t ext4 <you new partition name>
+    ```
+- Set the $LFS Variable
+
+```shell
+export LFS=mnt/lfs
+```
+- mount the new partition
+```shell
+sudo -E mkdir -pv $LFS
+sudo -E mount -v -t ext4 <you new partition name> $LFS
+```
+
+## STEP 3 Packages and Patches
+
+- create a dir for our packages
+```shell
+mkdir -v $LFS/sources
+chmod -v a+wt $LFS/sources #all write permission
+```
+- download packages for our LFS build 
+```shell
+wget https://www.linuxfromscratch.org/lfs/view/stable/wget-list-sysv
+wget --input-file=wget-list-sysv --continue --directory-prefix=$LFS/sources
+```
+
+## STEP 4 Final Prep
+After this, we can start building our LFS
